@@ -3,4 +3,4 @@ import express from 'express';
 
 const router = express.Router();
 
-export const refferalIncomesRoutes = router;
+export const referralIncomesRoutes = router;

@@ -13,7 +13,7 @@ const updateValidation = z.object({
     })
 });
 
-export const refferalIncomesValidation = {
+export const referralsValidation = {
     postValidation,
     updateValidation
 }

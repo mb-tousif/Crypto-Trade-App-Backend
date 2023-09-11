@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
 
-export const refferalsController = {
+export const referralIncomesController = {
 
 };
