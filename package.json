@@ -1,5 +1,5 @@
 {
-  "name": "bank-management",
+  "name": "online-trading-app-backend",
   "version": "1.0.0",
   "description": "```\r npm init -y\r npm install prisma typescript ts-node @types/node --save-dev\r npx tsc --init\r npx prisma\r npx prisma init\r ```",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "nodemon ./src/index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "MERN DEV TOUSIF",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.4.9",
