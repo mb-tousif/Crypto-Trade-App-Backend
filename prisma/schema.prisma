@@ -2,70 +2,129 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "mongodb"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
-}
-
-model User {
-  id         String    @id @default(uuid())
-  email      String    @unique
-  password   String
-  role       Role      @default(user)
-  balance    Balance[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  profileId  String?
-  profile    Profile[] @relation(name: "ProfileOwner")
-  referredBy Profile[] @relation(name: "ReferredBy")
-
-  // @@map used for set custom the table name in the database
-  @@map("users")
-}
-
-model Profile {
-  id         String   @id @default(uuid())
-  firstName  String
-  lastName   String
-  img        String   @default("https://i.imgur.com/HeIi0wU.png")
-  phone      String
-  referId    String
-  userId     String
-  address    String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  referredBy User     @relation(name: "ReferredBy", fields: [referId], references: [id])
-  user       User     @relation(name: "ProfileOwner", fields: [userId], references: [id])
-
-  @@map("profiles")
-}
-
-model Balance {
-  id        Int      @id @default(autoincrement())
-  amount    Int      @default(1000)
-  expense   Int      @default(0)
-  income    Int      @default(0)
-  savings   Int      @default(0)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-
-  @@map("balances")
 }
 
 enum Role {
   user
-  premiumUser
-  loaner
-  accountHolder
-  auditOfficer
   admin
-  manager
-  loanOfficer
-  accountant
-  cashier
+  investor
+  staker
+}
+
+model User {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String?
+  email   String   @unique
+  password String
+  img     String? @default("https://i.imgur.com/HeIi0wU.png")
+  role    Role     @default(user)
+  contactNo String?
+  address String?
+
+  userStakes UserStake[]
+  userStakeRewards UserStakeReward[]
+  userDeposits UserDeposit[]
+  userWithdraws UserWithdraw[]
+  userWallets UserWallet[]
+  refferals Refferal[]
+  refferalIncomes RefferalIncome[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model UserWallet {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  balance Float @default(0)
+  deposit Float @default(0)
+  withdraw Float @default(0)
+  stake Float @default(0)
+  stakeReward Float @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("userWallets")
+}
+
+model UserDeposit {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  amount Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("userDeposits")
+}
+
+model UserWithdraw {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  amount Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("userWithdraws")
+}
+
+model UserStake {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount Float
+  userId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("userStakes")
+}
+
+model UserStakeReward {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  amount Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("userStakeRewards")
+}
+
+model Refferal {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  refferalId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("refferals")
+}
+
+model RefferalIncome {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String
+  amount Int @default(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("refferalIncomes")
 }
