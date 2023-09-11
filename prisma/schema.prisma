@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(uuid())
+  email      String    @unique
+  password   String
+  role       Role      @default(user)
+  balance    Balance[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  profileId  String?
+  profile    Profile[] @relation(name: "ProfileOwner")
+  referredBy Profile[] @relation(name: "ReferredBy")
+
+  // @@map used for set custom the table name in the database
+  @@map("users")
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  firstName  String
+  lastName   String
+  img        String   @default("https://i.imgur.com/HeIi0wU.png")
+  phone      String
+  referId    String
+  userId     String
+  address    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  referredBy User     @relation(name: "ReferredBy", fields: [referId], references: [id])
+  user       User     @relation(name: "ProfileOwner", fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Balance {
+  id        Int      @id @default(autoincrement())
+  amount    Int      @default(1000)
+  expense   Int      @default(0)
+  income    Int      @default(0)
+  savings   Int      @default(0)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("balances")
+}
+
+enum Role {
+  user
+  premiumUser
+  loaner
+  accountHolder
+  auditOfficer
+  admin
+  manager
+  loanOfficer
+  accountant
+  cashier
+}
