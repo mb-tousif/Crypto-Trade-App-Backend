@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "mongodb"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -19,13 +19,18 @@ enum Role {
 
 model User {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String?
+  name    String
   email   String   @unique
   password String
   img     String? @default("https://i.imgur.com/HeIi0wU.png")
   role    Role     @default(user)
-  contactNo String?
+  contactNo String
   address String?
+  wallet  Int @default(0)
+  deposit Int @default(0)
+  withdraw Int @default(0)
+  stake Int @default(0)
+  stakeReward Int @default(0)
 
   userStakes UserStake[]
   userStakeRewards UserStakeReward[]
