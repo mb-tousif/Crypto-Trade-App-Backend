@@ -1,9 +1,12 @@
 import express from 'express';
+import AuthPermission from '../../middleware/authPermission';
+import { ENUM_USER_ROLE } from '../../../enums';
+import { UserControllers } from './user.controller';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send(`<h1 style='text-align: center; padding: 20px; color:#753a88'>Hello from user routes!</h1>`);
-});
+router.get('/',
+AuthPermission(ENUM_USER_ROLE.ADMIN),
+UserControllers.getAllUsers);
 
 export const userRoutes = router;

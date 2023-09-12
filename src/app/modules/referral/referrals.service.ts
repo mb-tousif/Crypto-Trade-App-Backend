@@ -2,17 +2,18 @@ import { Referral } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 import ApiError from "../../../error/apiError";
 import httpStatus from "http-status";
+import { ENUM_USER_ROLE } from "../../../enums";
 
 const createReferral = async (payload:Referral) => {
   const { userId, referredBy, referralDeposit } = payload;
   // check if user exists
-  const isExistingUser = await prisma.user.findUnique({
+  const isExistingUser = await prisma.user.findFirst({
     where: {
       id: userId,
     },
   });
   // check if referredBy user exists
-  const isExistingReferralUser = await prisma.user.findUnique({
+  const isExistingReferralUser = await prisma.user.findFirst({
     where: {
       id: referredBy,
     },
@@ -21,20 +22,12 @@ const createReferral = async (payload:Referral) => {
   if (!isExistingUser || !isExistingReferralUser) {
     throw new ApiError(httpStatus.BAD_REQUEST, "User does not exist");
   }
-  const referralWorks = await prisma.$transaction(async (transactionClient) => {
-    // create referral
-    const referral = await transactionClient.referral.create({
-      data: {
-        userId,
-        referredBy,
-        referralDeposit,
-      },
-    });
+  const referralWorks = await prisma.$transaction(async transactionClient => {
     // create referral income
     await transactionClient.referralIncome.create({
       data: {
         userId: referredBy,
-        amount: referralDeposit * 0.5,
+        amount: referralDeposit * 0.05,
       },
     });
 
@@ -44,20 +37,21 @@ const createReferral = async (payload:Referral) => {
         id: userId,
       },
       data: {
-        deposit: {
-          increment: referralDeposit,
-        },
-        wallet: {
-          increment: referralDeposit,
-        },
+        deposit: referralDeposit,
+        wallet: referralDeposit,
+        role: ENUM_USER_ROLE.STAKER,
       },
     });
     // create Deposit
-    await transactionClient.userDeposit.create({
+    await transactionClient.deposit.create({
       data: {
         userId,
         amount: referralDeposit,
       },
+    });
+    // create referral
+    const referral = await transactionClient.referral.create({
+      data: payload,
     });
     return referral;
   });
