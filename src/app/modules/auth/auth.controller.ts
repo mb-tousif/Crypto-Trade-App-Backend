@@ -6,6 +6,7 @@ import httpStatus from "http-status";
 import sendResponse from "../../../shared/sendResponse";
 import { User } from "@prisma/client";
 
+// Create user in database
 const createUser = catchAsync(async (req: Request, res: Response) => {
     const payload = req.body;
     const result = await AuthServices.createUser(payload);
@@ -21,7 +22,23 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// Login user
+const loginUser = catchAsync(async (req: Request, res: Response) => {
+    const payload = req.body;
+    const result = await AuthServices.loginUser(payload);
+    if (!result){
+        throw new ApiError( httpStatus.BAD_REQUEST, "User didn't login");
+    }
+
+    sendResponse( res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "User login successfully",
+        token: result,
+    });
+});
 
 export const AuthController = {
     createUser,
+    loginUser,
 };
