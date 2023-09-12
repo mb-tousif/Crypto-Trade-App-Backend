@@ -37,8 +37,8 @@ model User {
   userDeposits UserDeposit[]
   userWithdraws UserWithdraw[]
   userWallets UserWallet[]
-  refferals Refferal[]
-  refferalIncomes RefferalIncome[]
+  referrals Referral[]
+  referralIncomes ReferralIncome[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -110,19 +110,19 @@ model UserStakeReward {
   @@map("userStakeRewards")
 }
 
-model Refferal {
+model Referral {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   userId  String
-  refferalId String
+  referralId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [id], references: [id])
 
-  @@map("refferals")
+  @@map("referrals")
 }
 
-model RefferalIncome {
+model ReferralIncome {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   userId  String
   amount Int @default(10)
@@ -131,5 +131,5 @@ model RefferalIncome {
 
   user User @relation(fields: [id], references: [id])
 
-  @@map("refferalIncomes")
+  @@map("referralIncomes")
 }
