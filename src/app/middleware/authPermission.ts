@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-const Auth =
+const AuthPermission =
   (...requiredRoles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -39,4 +39,4 @@ const Auth =
     }
   };
 
-export default Auth;
+export default AuthPermission;

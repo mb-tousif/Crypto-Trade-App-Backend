@@ -4,7 +4,8 @@
   "description": "```\r npm init -y\r npm install prisma typescript ts-node @types/node --save-dev\r npx tsc --init\r npx prisma\r npx prisma init\r ```",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.ts"
+    "start": "nodemon ./src/index.ts",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "MERN DEV TOUSIF",

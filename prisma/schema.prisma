@@ -18,118 +18,110 @@ enum Role {
 }
 
 model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  email   String   @unique
-  password String
-  img     String? @default("https://i.imgur.com/HeIi0wU.png")
-  role    Role     @default(user)
-  contactNo String
-  address String?
-  wallet  Int @default(0)
-  deposit Int @default(0)
-  withdraw Int @default(0)
-  stake Int @default(0)
-  stakeReward Int @default(0)
-
-  userStakes UserStake[]
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  email            String            @unique
+  password         String
+  img              String?           @default("https://i.imgur.com/HeIi0wU.png")
+  role             Role              @default(user)
+  contactNo        String
+  address          String?
+  wallet           Int               @default(0)
+  deposit          Int               @default(0)
+  withdraw         Int               @default(0)
+  stake            Int               @default(0)
+  stakeReward      Int               @default(0)
+  userStakes       UserStake[]
   userStakeRewards UserStakeReward[]
-  userDeposits UserDeposit[]
-  userWithdraws UserWithdraw[]
-  userWallets UserWallet[]
-  referrals Referral[]
-  referralIncomes ReferralIncome[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userDeposits     UserDeposit[]
+  userWithdraws    UserWithdraw[]
+  userWallets      UserWallet[]
+  referrals        Referral[]
+  referralIncomes  ReferralIncome[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   @@map("users")
 }
 
 model UserWallet {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  balance Float @default(0)
-  deposit Float @default(0)
-  withdraw Float @default(0)
-  stake Float @default(0)
-  stakeReward Float @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  balance     Float    @default(0)
+  deposit     Float    @default(0)
+  withdraw    Float    @default(0)
+  stake       Float    @default(0)
+  stakeReward Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [id], references: [id])
 
   @@map("userWallets")
 }
 
 model UserDeposit {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  amount Float
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  amount    Int      @default(200)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  user      User     @relation(fields: [id], references: [id])
 
   @@map("userDeposits")
 }
 
 model UserWithdraw {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  amount Float
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  user      User     @relation(fields: [id], references: [id])
 
   @@map("userWithdraws")
 }
 
 model UserStake {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount Float
-  userId  String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Float
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  user      User     @relation(fields: [id], references: [id])
 
   @@map("userStakes")
 }
 
 model UserStakeReward {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  amount Float
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  user      User     @relation(fields: [id], references: [id])
 
   @@map("userStakeRewards")
 }
 
 model Referral {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  referralId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  referredBy      String
+  referralDeposit Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [id], references: [id])
 
   @@map("referrals")
 }
 
 model ReferralIncome {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String
-  amount Int @default(10)
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  amount    Int      @default(10)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [id], references: [id])
+  user      User     @relation(fields: [id], references: [id])
 
   @@map("referralIncomes")
 }
