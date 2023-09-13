@@ -25,9 +25,8 @@ const AuthPermission =
       }
       // verify token
       let verifiedUser = null;
-
       verifiedUser = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
-
+      // set user to req.user
       req.user = verifiedUser;
 
       if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {

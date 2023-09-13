@@ -49,6 +49,13 @@ npx prisma init
  npx prisma studio
 ```
 
+### Generate Prisma Client
+
+```
+    npx prisma generate
+```
+
+
 ## API Endpoints
 
 ### User

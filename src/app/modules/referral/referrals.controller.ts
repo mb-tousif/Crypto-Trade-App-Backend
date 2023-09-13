@@ -15,11 +15,37 @@ const createReferral = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "User Referral created successfully",
+    message: "User Referral created and please sign out and sign in again",
     data: result,
+  });
+});
+
+// getAllReferrals Controller
+const getAllReferrals = catchAsync(async (req: Request, res: Response) => {
+  const referrals = await ReferralsService.getAllReferrals();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Referrals fetched successfully",
+    data: referrals,
+  });
+});
+
+// getReferralById Controller
+const getReferralById = catchAsync(async (req: Request, res: Response) => {
+  const { paramId } = req.params;
+  const user = (req as any).user;
+  const referral = await ReferralsService.getReferralById(paramId, user);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Referral fetched successfully",
+    data: referral,
   });
 });
 
 export const ReferralsController = {
     createReferral,
+    getAllReferrals,
+    getReferralById,
 };

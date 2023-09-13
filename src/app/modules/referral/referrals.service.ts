@@ -28,6 +28,7 @@ const createReferral = async (payload:Referral) => {
       data: {
         userId: referredBy,
         amount: referralDeposit * 0.05,
+        referredTo: userId,
       },
     });
 
@@ -37,9 +38,24 @@ const createReferral = async (payload:Referral) => {
         id: userId,
       },
       data: {
-        deposit: referralDeposit,
-        wallet: referralDeposit,
+        deposit: {
+          increment: referralDeposit,
+        },
+        wallet: {
+          increment: referralDeposit,
+        },
         role: ENUM_USER_ROLE.STAKER,
+      },
+    });
+    // update referred user wallet
+    await transactionClient.user.update({
+      where: {
+        id: referredBy,
+      },
+      data: {
+        wallet: {
+          increment: referralDeposit * 0.05,
+        },
       },
     });
     // create Deposit
@@ -58,6 +74,43 @@ const createReferral = async (payload:Referral) => {
   return referralWorks;
 };
 
+// get all referrals
+const getAllReferrals = async () => {
+  const referrals = await prisma.referral.findMany({
+    include: {
+      users: true,
+      referredByUser: true,
+    },
+  });
+  return referrals;
+};
+
+// get referral by id
+const getReferralById = async (paramId:string, user:any) => {
+// check if user is not admin and not the owner of the referral
+if (
+    user.role !== ENUM_USER_ROLE.ADMIN &&
+    user.id !== paramId
+  ) {
+      throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "You are not authorized to view this referral"
+        );
+      }
+  const referral = await prisma.referral.findMany({
+    where: {
+      id: paramId,
+    },
+    include: {
+      referredByUser: true,
+      users: true,
+    },
+  });
+  return referral;
+};
+
 export const ReferralsService = {
     createReferral,
+    getAllReferrals,
+    getReferralById,
 };

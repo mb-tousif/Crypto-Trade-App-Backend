@@ -8,5 +8,8 @@ const router = express.Router();
 router.get('/',
 AuthPermission(ENUM_USER_ROLE.ADMIN),
 UserControllers.getAllUsers);
+router.get('/:id',
+AuthPermission(ENUM_USER_ROLE.ADMIN),
+UserControllers.getUserById);
 
 export const userRoutes = router;

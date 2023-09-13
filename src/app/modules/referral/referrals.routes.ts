@@ -6,9 +6,23 @@ import AuthPermission from "../../middleware/authPermission";
 import { ENUM_USER_ROLE } from "../../../enums";
 
 const router = express.Router();
+router.get(
+  "/",
+  AuthPermission(ENUM_USER_ROLE.ADMIN),
+  ReferralsController.getAllReferrals
+);
+router.get(
+  "/:id",
+  AuthPermission(
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.STAKER,
+    ENUM_USER_ROLE.INVESTOR
+  ),
+  ReferralsController.getReferralById
+);
 router.post(
   "/createReferral",
-  AuthPermission(ENUM_USER_ROLE.ADMIN),
+  AuthPermission(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.STAKER),
   ValidateRequest(ReferralsValidation.postValidation),
   ReferralsController.createReferral
 );
