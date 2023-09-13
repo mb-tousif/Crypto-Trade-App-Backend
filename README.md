@@ -63,9 +63,13 @@ npx prisma init
 
 - [x] Create User `POST /api/v1/auth/register`
 - [x] Login User `POST /api/v1/auth/login`
+- [x] Get All Users `GET /api/v1/users`
+- [x] Get User by id `GET /api/v1/users/:id`
 
 ### Referrals
 
 - [x] Create Referral `POST /api/v1/referrals/createReferral`
+- [x] Get Referrals `GET /api/v1/referrals`
+- [x] Get Referral by id `GET /api/v1/referrals/:id`
 
 ###### Do not forget to feedback or starred if you like it.
