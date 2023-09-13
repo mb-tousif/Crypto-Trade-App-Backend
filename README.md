@@ -55,6 +55,7 @@ npx prisma init
     npx prisma generate
 ```
 
+### This is a link to the backend API hosted on vercel [Live Site](https://investor-trading.vercel.app/)
 
 ## API Endpoints
 
