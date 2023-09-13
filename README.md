@@ -2,7 +2,19 @@
 
 ## Description
 
-This is a backend for a Online Trading App where user can invest their money for trading purpose. It is built to implement CRUD operations, pagination and filtering using Prisma, MongoDB and Express. It is built with express.js and Typescript.
+This is a backend for a Online Trading App where user can invest their money for trading purpose. It is built with implementing CRUD operations, used `$transaction` for logical groups of processing data in *Mongodb* that needs to encapsulate several operations, pagination and filtering using *Prisma*, *MongoDB*, *Typescript* and *Express*.
+
+## Features
+
+- [x] Implemented CRUD operations
+- [x] Implemented Authentication and Authorization
+- [x] Implemented Pagination and Filtering
+- [x] Implemented `$transaction` for logical groups of processing data in *Mongodb* that needs to encapsulate several operations.
+- [x] Implemented `Zod` for validation
+- [x] Implemented `JWT` for authentication
+- [x] Implemented `Bcrypt` for hashing password
+- [x] Implemented `Prisma` for ORM
+- [x] Implemented `Typescript` for type checking
 
 ## Technologies Used
 
