@@ -9,7 +9,7 @@ import { jwtHelpers } from "../../../utils/jwtHelpers";
 
 const createUser = async (payload: User) => {
     // Check if user already exist
-  const isExist = await prisma.user.findFirst({
+  const isExist = await prisma.user.findUnique({
     where: {
       email: payload.email,
     },

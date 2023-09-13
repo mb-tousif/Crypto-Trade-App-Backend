@@ -37,4 +37,15 @@ npx prisma init
  npx prisma studio
 ```
 
+## API Endpoints
+
+### User
+
+- [x] Create User `POST /api/v1/auth/register`
+- [x] Login User `POST /api/v1/auth/login`
+
+### Referrals
+
+- [x] Create Referral `POST /api/v1/referrals/createReferral`
+
 ###### Do not forget to feedback or starred if you like it.
