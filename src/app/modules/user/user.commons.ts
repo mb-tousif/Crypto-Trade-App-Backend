@@ -1,15 +1,9 @@
-export const UserSearchAbleFields = [
-  "name",
-    "email",
-    "contactNo",
-    "wallet",
-    "role"
-];
+export const UserSearchableFields= ["name", "email", "contactNo"];
 
-export const AcademicSemesterFilterAbleFields = [
-  "searchTerm",
-  "title",
-  "code",
-  "startMonth",
-  "endMonth",
-];
+export const UserFilterAbleFields= ["search", "role", "address"];
+
+export type TUserFilterAbleFields = {
+  search?: string | undefined;
+  role?: string | undefined;
+  address?: string | undefined;
+};
