@@ -29,7 +29,7 @@ This is a backend for a Online Trading App where user can invest their money for
 ## Entity Relationship Diagram
 
 <p>
-<img src="./ERD.png" align="center" width="100%" height="100%" style="border-radius: 30px;">
+<img src="./ERD.svg" align="center" width="100%" height="100%" style="border-radius: 30px;">
 </p>
 
 ## Project Setup:
