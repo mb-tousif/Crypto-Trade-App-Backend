@@ -1,7 +1,7 @@
 {
-  "name": "online-trading-app-backend",
+  "name": "crypto-trade-app-backend",
   "version": "1.0.0",
-  "description": "```\r npm init -y\r npm install prisma typescript ts-node @types/node --save-dev\r npx tsc --init\r npx prisma\r npx prisma init\r ```",
+  "description": "Backend for Crypto Trade App",
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/index.js",
@@ -10,13 +10,12 @@
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate"
   },
-  "keywords": [],
+  "keywords": ["Online investing platform", "Crypto Trade App Backend"],
   "author": "MERN DEV TOUSIF",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.4.9",
     "prisma": "^5.1.1",
-    "prisma-erd-generator": "^1.11.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   },

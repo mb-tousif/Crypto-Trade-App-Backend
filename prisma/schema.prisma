@@ -5,11 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-  theme = "forest"
-  output = "../ERD.svg"
-}
+// generator erd {
+//   provider = "prisma-erd-generator"
+//   theme = "forest"
+//   output = "../ERD.svg"
+// }
 
 datasource db {
   provider = "mongodb"
@@ -37,6 +37,7 @@ model User {
   withdraw        Int              @default(0)
   stake           Int              @default(0)
   stakeReward     Int              @default(0)
+  referralReward  Int              @default(0)
   stakes          Stake[]
   stakeRewards    StakeReward[]
   deposits        Deposit[]
@@ -53,20 +54,20 @@ model User {
 }
 
 model Wallet {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String   @db.ObjectId
-  balance     Float    @default(0)
-  deposit     Float    @default(0)
-  withdraw    Float    @default(0)
-  stake       Float    @default(0)
-  stakeReward Float    @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  users       User     @relation(fields: [userId], references: [id])
-  deposits    Deposit  @relation(fields: [userId], references: [id])
-  withdraws   Withdraw @relation(fields: [userId], references: [id])
-  stakes      Stake    @relation(fields: [userId], references: [id])
-  stakeRewards StakeReward @relation(fields: [userId], references: [id])
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String         @db.ObjectId
+  balance         Float          @default(0)
+  deposit         Float          @default(0)
+  withdraw        Float          @default(0)
+  stake           Float          @default(0)
+  stakeReward     Float          @default(0)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  users           User           @relation(fields: [userId], references: [id])
+  deposits        Deposit        @relation(fields: [userId], references: [id])
+  withdraws       Withdraw       @relation(fields: [userId], references: [id])
+  stakes          Stake          @relation(fields: [userId], references: [id])
+  stakeRewards    StakeReward    @relation(fields: [userId], references: [id])
   referralIncomes ReferralIncome @relation(fields: [userId], references: [id])
 
   @@map("wallets")

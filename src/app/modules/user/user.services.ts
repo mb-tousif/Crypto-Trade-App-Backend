@@ -40,7 +40,22 @@ const getUserById = async (payload: string): Promise<User> => {
     return user;
 }
 
+// Update User by id Service
+const updateUserById = async (payload: Prisma.UserUpdateInput, id: string): Promise<User> => {
+    const user = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: payload,
+    });
+    if (!user) {
+      throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+    }
+    return user;
+}
+
 export const UserServices = {
     getAllUsers,
     getUserById,
+    updateUserById,
 }

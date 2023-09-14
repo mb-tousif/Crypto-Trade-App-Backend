@@ -1,8 +1,8 @@
-# This project is for a Online Trading App Backend.
+# This project is for a Crypto-Trade-App Backend.
 
 ## Description
 
-This is a backend for a Online Trading App where user can invest their money for trading purpose. It is built with implementing CRUD operations, used `$transaction` for logical groups of processing data in *Mongodb* that needs to encapsulate several operations, pagination and filtering using *Prisma*, *MongoDB*, *Typescript* and *Express*.
+This is a backend for a Crypto Trade App where user can invest their money for trading purpose. It is built with implementing CRUD operations, used `$transaction` for logical groups of processing data in *Mongodb* that needs to encapsulate several operations, pagination and filtering using *Prisma*, *MongoDB*, *Typescript* and *Express*.
 
 ## Features
 

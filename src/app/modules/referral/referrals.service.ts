@@ -21,7 +21,20 @@ const createReferral = async (payload:Referral) => {
   // handle error if user does not exist
   if (!isExistingUser || !isExistingReferralUser) {
     throw new ApiError(httpStatus.BAD_REQUEST, "User does not exist");
-  }
+  };
+  // check if user has been referred before, if yes, throw error
+  const isExistingReferral = await prisma.referral.findFirst({
+    where: {
+      userId: userId,
+    },
+  });
+  if (isExistingReferral) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User has been referred before");
+  };
+  // check if referredBy user role is not staker, if yes, throw error
+  if (isExistingReferralUser.role !== ENUM_USER_ROLE.STAKER) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Only stakers can refer users");
+  };
   const referralWorks = await prisma.$transaction(async transactionClient => {
     // create referral income
     await transactionClient.referralIncome.create({
@@ -39,12 +52,12 @@ const createReferral = async (payload:Referral) => {
       },
       data: {
         deposit: {
-          increment: referralDeposit,
+          increment: referralDeposit - referralDeposit * 0.05,
         },
         wallet: {
-          increment: referralDeposit,
+          increment: referralDeposit - referralDeposit * 0.05,
         },
-        role: ENUM_USER_ROLE.STAKER,
+        role: ENUM_USER_ROLE.INVESTOR,
       },
     });
     // update referred user wallet
@@ -54,6 +67,9 @@ const createReferral = async (payload:Referral) => {
       },
       data: {
         wallet: {
+          increment: referralDeposit * 0.05,
+        },
+        referralReward: {
           increment: referralDeposit * 0.05,
         },
       },
