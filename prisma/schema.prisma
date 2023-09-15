@@ -56,11 +56,11 @@ model User {
 model Wallet {
   id              String         @id @default(auto()) @map("_id") @db.ObjectId
   userId          String         @db.ObjectId
-  balance         Float          @default(0)
-  deposit         Float          @default(0)
-  withdraw        Float          @default(0)
-  stake           Float          @default(0)
-  stakeReward     Float          @default(0)
+  balance         Int            @default(0)
+  deposit         Int            @default(0)
+  withdraw        Int            @default(0)
+  stake           Int            @default(0)
+  stakeReward     Int            @default(0)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   users           User           @relation(fields: [userId], references: [id])
@@ -76,7 +76,7 @@ model Wallet {
 model Deposit {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  amount    Int      @default(200)
+  amount    Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])
@@ -88,7 +88,7 @@ model Deposit {
 model Withdraw {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  amount    Float
+  amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])
@@ -99,7 +99,7 @@ model Withdraw {
 
 model Stake {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount    Float
+  amount    Int      @default(0)
   userId    String   @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -112,7 +112,7 @@ model Stake {
 model StakeReward {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  amount    Float
+  amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])
