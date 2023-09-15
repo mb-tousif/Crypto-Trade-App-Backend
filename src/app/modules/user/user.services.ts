@@ -107,8 +107,30 @@ const updateUserById = async (
   return user;
 };
 
+// Delete User by id Service
+const deleteUserById = async (id: string): Promise<User> => {
+  const isExistUser  = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  if (!isExistUser) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found to delete");
+  }
+  const user = await prisma.user.delete({
+    where: {
+      id: id,
+    },
+  });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+  return user;
+};
+
 export const UserServices = {
   getAllUsers,
   getUserById,
   updateUserById,
+  deleteUserById,
 };

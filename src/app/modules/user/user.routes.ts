@@ -20,4 +20,8 @@ AuthPermission(ENUM_USER_ROLE.ADMIN),
 ValidateRequest(userValidation.updateValidation),
 UserControllers.updateUserById);
 
+router.delete('/:id',
+AuthPermission(ENUM_USER_ROLE.ADMIN),
+UserControllers.deleteUserById);
+
 export const userRoutes = router;
