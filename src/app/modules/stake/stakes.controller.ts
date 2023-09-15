@@ -15,6 +15,31 @@ const startStaking = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// get all stakes
+const getAllStakes = catchAsync(async (req: Request, res: Response) => {
+    const stakes = await StakesService.getAllStakes();
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Stakes fetched successfully",
+        data: stakes,
+    });
+});
+
+// get stake by id
+const getStakeById = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const stake = await StakesService.getStakeById(id);
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Stake fetched successfully",
+        data: stake,
+    });
+});
+
 export const StakesController = {
     startStaking,
+    getAllStakes,
+    getStakeById,
 };
