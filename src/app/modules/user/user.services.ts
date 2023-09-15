@@ -1,11 +1,50 @@
 import httpStatus from "http-status";
 import ApiError from "../../../error/apiError";
 import prisma from "../../../shared/prisma";
-import { Prisma, User } from "@prisma/client";
+import { Prisma, Role, User } from "@prisma/client";
+import { TUserFilterAbleFields, UserSearchableFields } from "./user.commons";
+import { IPaginationOptions } from "../../../common/pagination";
+import { paginationHelpers } from "../../../utils/paginationHelper";
 
 // getAllUsers Service
-const getAllUsers = async ( ) => {
+const getAllUsers = async (
+  filter: TUserFilterAbleFields,
+  options: IPaginationOptions
+) => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(options);
+  const { search, ...filterData } = filter;
+  // prisma query to get all users by searching and filtering
+  const andQuery = [];
+  if (search) {
+    andQuery.push({
+      OR: UserSearchableFields.map((field) => ({
+        [field]: {
+          contains: search,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  if (filterData.role) {
+    andQuery.push({
+      role: filterData.role as Role,
+    });
+    if (filterData.address) {
+      andQuery.push({
+        address: filterData.address,
+      });
+    }
+  }
+  const whereConditions: any = andQuery.length > 0 ? { AND: andQuery } : {};
   const users = await prisma.user.findMany({
+    where: whereConditions,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
     include: {
       deposits: true,
       referredBy: true,
@@ -14,11 +53,21 @@ const getAllUsers = async ( ) => {
       withdraws: true,
     },
   });
+
+  const total = await prisma.user.count({ where: whereConditions });
   if (users.length == 0) {
     throw new ApiError(httpStatus.NOT_FOUND, "No users found");
-  };
+  }
 
-  return users;
+  return {
+    meta: {
+      page: page,
+      limit: limit,
+      total: total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: users,
+  };
 };
 
 // getUserById Service

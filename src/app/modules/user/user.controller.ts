@@ -3,15 +3,20 @@ import catchAsync from "../../../shared/catchAsync";
 import { UserServices } from "./user.services";
 import { Request, Response } from "express";
 import sendResponse from "../../../shared/sendResponse";
+import Pick from "../../../shared/pick";
+import { paginationFields } from "../../../constant/pagination";
 
 // getAllUsers Controller
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-  const users = await UserServices.getAllUsers();
+  const filter = Pick(req.query, ["name", "email", "role"])
+  const options = Pick(req.query, paginationFields);
+  const users = await UserServices.getAllUsers(filter, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Users fetched successfully",
-    data: users
+    meta: users.meta,
+    data: users.data,
   });
 });
 
