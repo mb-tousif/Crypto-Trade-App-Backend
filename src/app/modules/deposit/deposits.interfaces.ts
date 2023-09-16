@@ -1,2 +1,4 @@
-
-// Define your interfaces here
+export type TDepositPayload = {
+    userId: string;
+    amount: number;
+};
