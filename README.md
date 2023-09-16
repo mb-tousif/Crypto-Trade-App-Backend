@@ -80,4 +80,10 @@ npx prisma init
 - [x] Get All Referrals `GET /api/v1/referrals` [only admin]
 - [x] Get Referral by id `GET /api/v1/referrals/:id` [Admin, staker, investor]
 
+### Staking
+
+- [x] Create Staking `POST /api/v1/stakers/startStaking` [only staker, investor, admin]
+- [x] Get All Stakes `GET /api/v1/stakers` [only admin]
+- [x] Get Stake by id `GET /api/v1/stakers/:id` [Admin, staker, investor]
+
 ###### Do not forget to feedback or starred if you like it.
