@@ -32,6 +32,9 @@ const startStaking = async (
         deposit: {
           decrement: payload.amount,
         },
+        stake: {
+          increment: payload.amount,
+        },
       },
     });
   }
@@ -65,11 +68,9 @@ const startStaking = async (
     include: {
       users: true,
     },
-  });
-
-  return stake;
+});
+return stake;
 };
-
 // get all stakes
 const getAllStakes = async (): Promise<Stake[]> => {
   const stakes = await prisma.stake.findMany({
@@ -92,6 +93,7 @@ const getStakeById = async (id: string): Promise<Stake> => {
   }
   return stake;
 };
+// need to update stakerRewards 
 
 export const StakesService = {
   startStaking,

@@ -113,6 +113,7 @@ model StakeReward {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
   amount    Int
+  status    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])

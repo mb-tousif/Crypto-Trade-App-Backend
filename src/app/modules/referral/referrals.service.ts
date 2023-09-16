@@ -31,10 +31,6 @@ const createReferral = async (payload:Referral) => {
   if (isExistingReferral) {
     throw new ApiError(httpStatus.BAD_REQUEST, "User has been referred before");
   };
-  // check if referredBy user role is not staker, if yes, throw error
-  if (isExistingReferralUser.role !== ENUM_USER_ROLE.STAKER) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Only stakers can refer users");
-  };
   const referralWorks = await prisma.$transaction(async transactionClient => {
     // create referral income
     await transactionClient.referralIncome.create({
@@ -79,6 +75,9 @@ const createReferral = async (payload:Referral) => {
       data: {
         userId,
         amount: referralDeposit,
+      },
+      include: {
+        users: true,
       },
     });
     // create referral

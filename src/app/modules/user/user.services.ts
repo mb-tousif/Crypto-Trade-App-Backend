@@ -35,6 +35,21 @@ const getAllUsers = async (
       andQuery.push({
         address: filterData.address,
       });
+      if (filterData.email) {
+        andQuery.push({
+          email: filterData.email,
+        });
+      }
+      if (filterData.name) {
+        andQuery.push({
+          name: filterData.name,
+        });
+      }
+      if (filterData.contactNo) {
+        andQuery.push({
+          contactNo: filterData.contactNo,
+        });
+      }
     }
   }
   const whereConditions: any = andQuery.length > 0 ? { AND: andQuery } : {};
