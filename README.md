@@ -61,15 +61,23 @@ npx prisma init
 
 ### User
 
-- [x] Create User `POST /api/v1/auth/register`
-- [x] Login User `POST /api/v1/auth/login`
-- [x] Get All Users `GET /api/v1/users`
-- [x] Get User by id `GET /api/v1/users/:id`
+- [x] Create User `POST /api/v1/auth/register` [All users]
+- [x] Login User `POST /api/v1/auth/login` [All users]
+- [x] Get All Users `GET /api/v1/users` [Only admin]
+- [x] Get User by id `GET /api/v1/users/:id` [All users]
+- [x] Update User `PUT /api/v1/users/:id` [Only admin]
+- [x] Delete User `DELETE /api/v1/users/:id` [Only admin]
+
+### Deposit
+
+- [x] Create Deposit `POST /api/v1/deposits/createDeposit` [only user & admin]
+- [x] Get All Deposits `GET /api/v1/deposits` [only admin]
+- [x] Get Deposit by id `GET /api/v1/deposits/:id` [Admin, user, investor, staker]
 
 ### Referrals
 
-- [x] Create Referral `POST /api/v1/referrals/createReferral`
-- [x] Get Referrals `GET /api/v1/referrals`
-- [x] Get Referral by id `GET /api/v1/referrals/:id`
+- [x] Create Referral `POST /api/v1/referrals/createReferral` [only staker & admin]
+- [x] Get All Referrals `GET /api/v1/referrals` [only admin]
+- [x] Get Referral by id `GET /api/v1/referrals/:id` [Admin, staker, investor]
 
 ###### Do not forget to feedback or starred if you like it.

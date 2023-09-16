@@ -19,7 +19,7 @@ const createReferral = async (payload:Referral) => {
     },
   });
   // handle error if user does not exist
-  if (!isExistingUser || !isExistingReferralUser) {
+  if (!isExistingUser && !isExistingReferralUser) {
     throw new ApiError(httpStatus.BAD_REQUEST, "User does not exist");
   };
   // check if user has been referred before, if yes, throw error
@@ -33,13 +33,13 @@ const createReferral = async (payload:Referral) => {
   };
   const referralWorks = await prisma.$transaction(async transactionClient => {
     // create referral income
-    await transactionClient.referralIncome.create({
-      data: {
-        userId: referredBy,
-        amount: referralDeposit * 0.05,
-        referredTo: userId,
-      },
-    });
+      await transactionClient.referralIncome.create({
+        data: {
+          userId: referredBy,
+          amount: referralDeposit * 0.05,
+          referredTo: userId,
+        },
+      });
 
     // update user
     await transactionClient.user.update({
@@ -68,26 +68,69 @@ const createReferral = async (payload:Referral) => {
         referralReward: {
           increment: referralDeposit * 0.05,
         },
+        income: {
+          increment: referralDeposit * 0.05,
+        },
       },
     });
-    // create Deposit
-    await transactionClient.deposit.create({
-      data: {
-        userId,
-        amount: referralDeposit,
+    // update or create income
+    const isExistingIncome = await transactionClient.incomes.findFirst({
+      where: {
+        userId: referredBy,
       },
-      include: {
-        users: true,
+    });
+    if (isExistingIncome) {
+      await transactionClient.incomes.update({
+        where: {
+          id: isExistingIncome.id,
+        },
+        data: {
+          totalIncome: {
+            increment: referralDeposit * 0.05,
+          },
+          referralIncome: {
+            increment: referralDeposit * 0.05,
+          },
+        },
+      });
+    }
+    // update or create wallet
+    const isExistingWallet = await transactionClient.wallet.findFirst({
+      where: {
+        userId: referredBy,
+      },
+    });
+    if (isExistingWallet) {
+      await transactionClient.wallet.update({
+        where: {
+          id: isExistingWallet.id,
+        },
+        data: {
+          referralReward: {
+            increment: referralDeposit * 0.05,
+          },
+        },
+      });
+    }
+    await transactionClient.wallet.create({
+      data: {
+        userId: referredBy,
+        referralReward: referralDeposit * 0.05,
       },
     });
     // create referral
     const referral = await transactionClient.referral.create({
-      data: payload,
+      data: {
+        userId: userId,
+        referredBy: referredBy,
+        referralDeposit: referralDeposit,
+      },
     });
     return referral;
-  });
+  }
+  );
   return referralWorks;
-};
+}
 
 // get all referrals
 const getAllReferrals = async () => {

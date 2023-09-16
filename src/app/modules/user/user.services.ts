@@ -62,6 +62,7 @@ const getAllUsers = async (
     },
     include: {
       deposits: true,
+      incomes: true,
       referredBy: true,
       referredTo: true,
       referralIncomes: true,

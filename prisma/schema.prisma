@@ -38,6 +38,8 @@ model User {
   stake           Int              @default(0)
   stakeReward     Int              @default(0)
   referralReward  Int              @default(0)
+  income          Int              @default(0)
+  incomes         Incomes[]
   stakes          Stake[]
   stakeRewards    StakeReward[]
   deposits        Deposit[]
@@ -61,6 +63,7 @@ model Wallet {
   withdraw        Int            @default(0)
   stake           Int            @default(0)
   stakeReward     Int            @default(0)
+  referralReward  Int            @default(0)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   users           User           @relation(fields: [userId], references: [id])
@@ -118,6 +121,7 @@ model StakeReward {
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])
   wallets   Wallet[]
+  incomes   Incomes[]
 
   @@map("stakeRewards")
 }
@@ -145,6 +149,24 @@ model ReferralIncome {
   referredBy User     @relation(name: "ReferredBy", fields: [referredTo], references: [id])
   user       User     @relation(name: "ReferredTo", fields: [userId], references: [id])
   wallets    Wallet[]
+  incomes    Incomes[]
 
   @@map("referralIncomes")
+}
+
+model Incomes {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  totalIncome    Int     @default(0)
+  stakeIncome    Int     @default(0)
+  referralIncome Int     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stakeRewardsId    String   @db.ObjectId
+  referralIncomeId  String   @db.ObjectId
+  users     User     @relation(fields: [userId], references: [id])
+  stakeRewards    StakeReward    @relation(fields: [stakeRewardsId], references: [id])
+  referralIncomes ReferralIncome @relation(fields: [referralIncomeId], references: [id])
+
+  @@map("incomes")
 }

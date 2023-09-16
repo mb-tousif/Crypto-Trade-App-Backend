@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
-import { ReferralsService } from "./referrals.service";
 import ApiError from "../../../error/apiError";
 import httpStatus from "http-status";
 import sendResponse from "../../../shared/sendResponse";
+import { ReferralsService } from "./referrals.service";
 
 const createReferral = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
