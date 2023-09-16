@@ -1,4 +1,4 @@
-import { Referral } from "@prisma/client";
+import { Prisma, Referral } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 import ApiError from "../../../error/apiError";
 import httpStatus from "http-status";
@@ -6,6 +6,18 @@ import { ENUM_USER_ROLE } from "../../../enums";
 
 const createReferral = async (payload:Referral) => {
   const { userId, referredBy, referralDeposit } = payload;
+  // check if user deposit is greater than referral deposit
+  const isEligibleForReferral = await prisma.deposit.findFirst({
+    where: {
+      userId: userId,
+      amount: {
+        gte: referralDeposit,
+      },
+    },
+  });
+  if (!isEligibleForReferral) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User is not eligible for referral");
+  };
   // check if user exists
   const isExistingUser = await prisma.user.findFirst({
     where: {
@@ -33,7 +45,7 @@ const createReferral = async (payload:Referral) => {
   };
   const referralWorks = await prisma.$transaction(async transactionClient => {
     // create referral income
-      await transactionClient.referralIncome.create({
+    const referralIncomeData =  await transactionClient.referralIncome.create({
         data: {
           userId: referredBy,
           amount: referralDeposit * 0.05,
@@ -48,14 +60,44 @@ const createReferral = async (payload:Referral) => {
       },
       data: {
         deposit: {
-          increment: referralDeposit - referralDeposit * 0.05,
+          decrement: referralDeposit - referralDeposit * 0.05,
         },
         wallet: {
+          decrement: referralDeposit - referralDeposit * 0.05,
+        },
+        stake: {
           increment: referralDeposit - referralDeposit * 0.05,
         },
         role: ENUM_USER_ROLE.INVESTOR,
       },
     });
+
+    // update or create stake
+    const isExistingStake = await transactionClient.stake.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+    let stakeData:Prisma.StakeUncheckedCreateInput;
+    if (isExistingStake) {
+     stakeData = await transactionClient.stake.update({
+        where: {
+          id: isExistingStake.id,
+        },
+        data: {
+          amount: {
+            increment: referralDeposit - referralDeposit * 0.05,
+          },
+        },
+      });
+    }
+   stakeData = await transactionClient.stake.create({
+      data: {
+        userId: userId,
+        amount: referralDeposit - referralDeposit * 0.05,
+      },
+    });
+
     // update referred user wallet
     await transactionClient.user.update({
       where: {
@@ -94,6 +136,16 @@ const createReferral = async (payload:Referral) => {
         },
       });
     }
+    
+    await transactionClient.incomes.create({
+      data: {
+        userId: referredBy,
+        totalIncome: referralDeposit * 0.05,
+        referralIncome: referralDeposit * 0.05,
+        referralIncomeId: referralIncomeData.id,
+        stakeRewardsId: stakeData.id,
+      } as Prisma.IncomesUncheckedCreateInput,
+    });
     // update or create wallet
     const isExistingWallet = await transactionClient.wallet.findFirst({
       where: {
