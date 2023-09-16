@@ -161,6 +161,9 @@ const createReferral = async (payload:Referral) => {
           referralReward: {
             increment: referralDeposit * 0.05,
           },
+          balance: {
+            increment: referralDeposit * 0.05,
+          },
         },
       });
     }
@@ -168,6 +171,7 @@ const createReferral = async (payload:Referral) => {
       data: {
         userId: referredBy,
         referralReward: referralDeposit * 0.05,
+        balance: referralDeposit * 0.05,
       },
     });
     // create referral

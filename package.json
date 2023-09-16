@@ -10,7 +10,10 @@
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate"
   },
-  "keywords": ["Online investing platform", "Crypto Trade App Backend"],
+  "keywords": [
+    "Online investing platform",
+    "Crypto Trade App Backend"
+  ],
   "author": "MERN DEV TOUSIF",
   "license": "ISC",
   "devDependencies": {

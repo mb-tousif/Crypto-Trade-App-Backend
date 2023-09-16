@@ -23,6 +23,12 @@ enum Role {
   staker
 }
 
+enum InvestmentSchemeName {
+  Basic
+  Standard
+  Premium
+}
+
 model User {
   id              String           @id @default(auto()) @map("_id") @db.ObjectId
   name            String
@@ -108,6 +114,7 @@ model Stake {
   updatedAt DateTime @updatedAt
   users     User     @relation(fields: [userId], references: [id])
   wallets   Wallet[]
+  investmentSchemes InvestmentScheme[]
 
   @@map("stakes")
 }
@@ -169,4 +176,16 @@ model Incomes {
   referralIncomes  ReferralIncome @relation(fields: [referralIncomeId], references: [id])
 
   @@map("incomes")
+}
+
+model InvestmentScheme {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      InvestmentSchemeName @unique @default(Basic)
+  amount    Int       @default(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stakeId   String   @db.ObjectId
+  stakes    Stake  @relation(fields: [stakeId], references: [id])
+
+  @@map("investmentSchemes")
 }
