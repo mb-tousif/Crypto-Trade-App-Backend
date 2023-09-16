@@ -66,6 +66,7 @@ const getAllUsers = async (
       referredTo: true,
       referralIncomes: true,
       withdraws: true,
+      stakeRewards: true,
     },
   });
 
