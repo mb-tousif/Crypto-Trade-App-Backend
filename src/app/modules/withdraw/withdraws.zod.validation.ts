@@ -3,17 +3,15 @@ import { z } from "zod";
 
 const postValidation = z.object({
     body: z.object({
-
+        userId: z.string({
+            required_error: "User id is required"
+        }),
+        amount: z.number({
+            required_error: "Amount is required"
+        })
     })
 });
 
-const updateValidation = z.object({
-    body: z.object({
-
-    })
-});
-
-export const withdrawsValidation = {
+export const WithdrawsValidation = {
     postValidation,
-    updateValidation
 }

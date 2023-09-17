@@ -98,4 +98,10 @@ npx prisma init
 - [x] Get Income by id `GET /api/v1/incomes/:id` [Admin, staker, investor]
 - [x] Update Income `PATCH /api/v1/incomes/:id` [Only admin]
 
+### Withdraw
+
+- [x] Get All Withdraw `GET /api/v1/withdrawals/all` [only admin]
+- [x] Get Withdraw by id `GET /api/v1/withdrawals/:id` [Admin, user, staker, investor]
+- [x] Withdraw money `POST /api/v1/withdrawals/withdraw-money` [Admin, staker, investor]
+
 ###### Do not forget to feedback or starred if you like it.
