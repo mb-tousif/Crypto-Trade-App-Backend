@@ -26,7 +26,7 @@ const moduleRoutes = [
     route: referralsRoutes,
   },
   {
-    path: "/referralIncomes",
+    path: "/referral-incomes",
     route: referralIncomesRoutes,
   },
   {

@@ -80,6 +80,11 @@ npx prisma init
 - [x] Get All Referrals `GET /api/v1/referrals` [only admin]
 - [x] Get Referral by id `GET /api/v1/referrals/:id` [Admin, staker, investor]
 
+### Referral Reward
+
+- [x] Get Referral Reward `GET /api/v1/referral-incomes/all` [only admin]
+- [x] Get Referral Reward by id `GET /api/v1/referral-incomes/:id` [Admin, staker, investor, user]
+
 ### Staking
 
 - [x] Create Staking `POST /api/v1/stakers/startStaking` [only staker, investor, admin]
@@ -101,7 +106,7 @@ npx prisma init
 ### Withdraw
 
 - [x] Get All Withdraw `GET /api/v1/withdrawals/all` [only admin]
-- [x] Get Withdraw by id `GET /api/v1/withdrawals/:id` [Admin, user, staker, investor]
+- [x] Get Withdraw by id [userId] `GET /api/v1/withdrawals/:id` [Admin, user, staker, investor]
 - [x] Withdraw money `POST /api/v1/withdrawals/withdraw-money` [Admin, staker, investor]
 
 ###### Do not forget to feedback or starred if you like it.
