@@ -65,7 +65,7 @@ npx prisma init
 - [x] Login User `POST /api/v1/auth/login` [All users]
 - [x] Get All Users `GET /api/v1/users` [Only admin]
 - [x] Get User by id `GET /api/v1/users/:id` [All users]
-- [x] Update User `PUT /api/v1/users/:id` [Only admin]
+- [x] Update User `PATCH /api/v1/users/:id` [Only admin]
 - [x] Delete User `DELETE /api/v1/users/:id` [Only admin]
 
 ### Deposit
@@ -85,5 +85,17 @@ npx prisma init
 - [x] Create Staking `POST /api/v1/stakers/startStaking` [only staker, investor, admin]
 - [x] Get All Stakes `GET /api/v1/stakers` [only admin]
 - [x] Get Stake by id `GET /api/v1/stakers/:id` [Admin, staker, investor]
+
+### Stake Reward
+
+- [x] Create Stake Reward `GET /api/v1/stake-rewards/stakeRewards` [Only admin]
+- [x] Get All Stake Rewards `GET /api/v1/stake-rewards/all` [Only admin]
+- [x] Get Stake Reward by id `GET /api/v1/stake-rewards/:id` [Admin, staker, investor]
+
+### Income
+
+- [x] Get All Incomes `GET /api/v1/incomes/all` [only admin]
+- [x] Get Income by id `GET /api/v1/incomes/:id` [Admin, staker, investor]
+- [x] Update Income `PATCH /api/v1/incomes/:id` [Only admin]
 
 ###### Do not forget to feedback or starred if you like it.

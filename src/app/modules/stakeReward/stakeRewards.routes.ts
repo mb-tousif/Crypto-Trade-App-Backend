@@ -13,7 +13,7 @@ router.get('/all',
     StakeRewardsController.getAllStakeRewards
 );
 router.get('/:id', 
-    AuthPermission(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.INVESTOR, ENUM_USER_ROLE.USER, ENUM_USER_ROLE.STAKER),
+    AuthPermission(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.INVESTOR, ENUM_USER_ROLE.STAKER),
     StakeRewardsController.getStakeRewardById
 );
 
