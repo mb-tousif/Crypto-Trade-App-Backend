@@ -68,6 +68,11 @@ npx prisma init
 - [x] Update User `PATCH /api/v1/users/:id` [Only admin]
 - [x] Delete User `DELETE /api/v1/users/:id` [Only admin]
 
+### Wallet
+
+- [x] Get All Wallets `GET /api/v1/wallets/` [Only admin]
+- [x] Get Wallet by id `GET /api/v1/wallets/:id` [ user, staker, investor]
+
 ### Deposit
 
 - [x] Create Deposit `POST /api/v1/deposits/createDeposit` [only user & admin]
