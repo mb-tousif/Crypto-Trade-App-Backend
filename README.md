@@ -63,7 +63,7 @@ npx prisma init
 
 - [x] Create User `POST /api/v1/auth/register` [All users]
 - [x] Login User `POST /api/v1/auth/login` [All users]
-- [x] Get All Users `GET /api/v1/users` [Only admin]
+- [x] Get All Users `GET /api/v1/users` [All users]
 - [x] Get User by id `GET /api/v1/users/:id` [All users]
 - [x] Update User `PATCH /api/v1/users/:id` [Only admin]
 - [x] Delete User `DELETE /api/v1/users/:id` [Only admin]
