@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Musab Bin Tousif",
+    "email": "musab@gmail.com",
+    "password": "$2b$12$8O/hamsVNnLhPtK8vagpKuyHWOEfB7d3WmkQoalW9QIS.CwN9zjqi",
+    "img": "https://img.freepik.com/premium-photo/man-trader-with-laptop-monitor_917213-13939.jpg",
+    "role": "admin",
+    "contactNo": "+8801670224448",
+    "address": "Cumilla, Bangladesh"
+  },
+  {
+    "name": "Mir Hossain",
+    "email": "mir@gmail.com",
+    "password": "$2b$12$dhFkFY1n8AOs1EzkD4Nq5.N31AMZzIOBbJrZNHSFqDCvxG1pvhvb6",
+    "img": "https://img.freepik.com/free-photo/man-suit-is-walking-across-crosswalk-with-suitcase_1340-38247.jpg",
+    "role": "investor",
+    "contactNo": "+880160000000",
+    "address": "Chattogram, Bangladesh"
+  },
+  {
+    "name": "Fahim Ahammed",
+    "email": "fahim@gmail.com",
+    "password": "$2b$12$eiviIa.kZr.wZAQzEqYO/uW2NHHiaCXesDW4wW8yAx4xD4Ji/s.Xe",
+    "img": "https://img.freepik.com/premium-photo/man-trader-with-laptop-monito_917213-13884.jpg",
+    "role": "user",
+    "contactNo": "+880170000000",
+    "address": "Rajshahi, Bangladesh"
+  },
+  {
+    "id": "6505f5b44405f1fba75c60be",
+    "name": "Nazmul Hassan",
+    "email": "nazmul@gmail.com",
+    "password": "$2b$12$9vifi84JGot6hNs07CIYve5X5Yc55De7qpw7tdmW.pl3eWPnBAkLq",
+    "img": "https://img.freepik.com/free-photo/man-suit-walks-with-suitcase-front-cityscape_1340-38250.jpg",
+    "role": "user",
+    "contactNo": "+880170000000",
+    "address": "Kusthia, Bangladesh"
+  }
+]
